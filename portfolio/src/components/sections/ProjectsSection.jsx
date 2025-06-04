@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useInView from '../../hooks/useInView';
 import ProjectCard from '../projects/ProjectCard';
 import { projectsData } from '../../data/projectsData';
 import Button from '../ui/Button';
@@ -61,8 +62,9 @@ const ProjectsSection = () => {
         (project.category || 'otros').toLowerCase() === filter
       );
 
+  const [ref, inView] = useInView({ threshold: 0.1 });
   return (
-    <ProjectsContainer id="proyectos">
+    <ProjectsContainer id="proyectos" ref={ref} className={inView ? 'fade-in-section' : 'fade-out-section'}>
       <Container>
         <SectionHeader>
           <h2>Mis Proyectos</h2>

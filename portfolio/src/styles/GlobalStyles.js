@@ -60,6 +60,17 @@ export const GlobalStyles = createGlobalStyle`
     animation: fadeIn 0.5s ease-out;
   }
 
+  .fade-in-section {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+  }
+  .fade-out-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+  }
+
   .social-links {
     display: flex;
     flex-direction: column;

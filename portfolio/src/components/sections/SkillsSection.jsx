@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import useResponsive from '../../hooks/useResponsive';
+import useInView from '../../hooks/useInView';
 import { skillsData, certificationsData, developmentStats } from '../../data/skillsData';
 import SkillBadge from '../ui/SkillBadge';
 import Button from '../ui/Button';
@@ -79,20 +80,11 @@ const CertCard = styled.div`
 `;
 
 const SkillsSection = () => {
-  const [animate, setAnimate] = useState(false);
   const { isMobile } = useResponsive();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && setAnimate(true),
-      { threshold: 0.1 }
-    );
-    observer.observe(document.getElementById('habilidades'));
-    return () => observer.disconnect();
-  }, []);
+  const [ref, inView] = useInView({ threshold: 0.1 });
 
   return (
-    <SkillsContainer id="habilidades">
+    <SkillsContainer id="habilidades" ref={ref} className={inView ? 'fade-in-section' : 'fade-out-section'}>
       <Container>
         <SectionHeader>
           <h2><i className="fas fa-tools" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Mis Habilidades</h2>
@@ -108,7 +100,7 @@ const SkillsSection = () => {
                   key={skill.name}
                   skill={skill}
                   showProgress
-                  animate={animate}
+                  animate={inView}
                   $small={isMobile}
                 />
               ))}

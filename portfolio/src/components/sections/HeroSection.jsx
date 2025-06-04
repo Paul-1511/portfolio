@@ -1,5 +1,6 @@
 import React from 'react';
 import useResponsive from '../../hooks/useResponsive';
+import useInView from '../../hooks/useInView';
 import Button from '../ui/Button';
 import styled from 'styled-components';
 
@@ -71,13 +72,14 @@ const HeroSocial = styled.div`
 
 const HeroSection = () => {
   const { isMobile } = useResponsive();
+  const [ref, inView] = useInView({ threshold: 0.1 });
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <HeroContainer id="inicio">
+    <HeroContainer id="inicio" ref={ref} className={inView ? 'fade-in-section' : 'fade-out-section'}>
       <HeroContent $isMobile={isMobile}>
         <HeroText>
           <h1>Hola, soy <span>Pablo Méndez</span></h1>
