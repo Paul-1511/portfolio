@@ -52,6 +52,6 @@ export const projectsData = [
     image: "/images/ecommerce-app.jpg",
     demoUrl: "https://ecommerce-app-woad-nine.vercel.app/",
     githubUrl: "https://github.com/Paul-1511/ecommerce-app",
-    technologies: ["React", "Node.js", "MongoDB", "Express", "CSS3"]
+    technologies: ["React", "Node.js", "Express", "CSS3"]
   }
 ];

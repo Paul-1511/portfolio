@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useResponsive from '../../hooks/useResponsive';
-import { skillsData } from '../../data/skillsData';
+import { skillsData, certificationsData, developmentStats } from '../../data/skillsData';
 import SkillBadge from '../ui/SkillBadge';
 import Button from '../ui/Button';
 import { capitalize } from '../../utils/helpers';
@@ -29,6 +29,12 @@ const SkillsGrid = styled.div`
   display: grid;
   gap: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+  }
 `;
 
 const SkillCategory = styled.div`
@@ -89,14 +95,14 @@ const SkillsSection = () => {
     <SkillsContainer id="habilidades">
       <Container>
         <SectionHeader>
-          <h2>Mis Habilidades</h2>
+          <h2><i className="fas fa-tools" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Mis Habilidades</h2>
           <p>Tecnologías que domino y uso diariamente</p>
         </SectionHeader>
 
         <SkillsGrid>
           {Array.isArray(skillsData) && skillsData.map((category) => (
             <SkillCategory key={category.category}>
-              <h3>{capitalize(category.category)}</h3>
+              <h3><i className="fas fa-star" style={{ marginRight: '0.5rem' }}></i>{capitalize(category.category)}</h3>
               {Array.isArray(category.skills) && category.skills.map((skill) => (
                 <SkillBadge
                   key={skill.name}
@@ -114,22 +120,29 @@ const SkillsSection = () => {
           <Certifications>
             <h3>Certificaciones</h3>
             <CertsGrid>
-              <CertCard>
-                <i className="fab fa-react"></i>
-                <h4>React Avanzado</h4>
-                <p>FreeCodeCamp · 2024</p>
-              </CertCard>
-              {/* Agrega más certificaciones aquí */}
+              {certificationsData.map(cert => (
+                <CertCard key={cert.id}>
+                  <i className={cert.icon}></i>
+                  <h4>{cert.title}</h4>
+                  <p>{cert.issuer} · {cert.date}</p>
+                </CertCard>
+              ))}
             </CertsGrid>
           </Certifications>
         )}
 
-        <CTA>
-          <Button as="a" href="#contacto" variant="primary">
-            ¿Trabajamos juntos?
-          </Button>
-        </CTA>
-      </Container>
+        <div className="dev-stats" style={{ margin: '3rem 0' }}>
+          <h3>Estadísticas de Desarrollo</h3>
+          <ul>
+            <li><i className="fas fa-project-diagram" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Proyectos totales: {developmentStats.totalProjects}</li>
+            <li><i className="fas fa-clock" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Horas completadas: {developmentStats.completedHours}</li>
+            <li><i className="fas fa-code" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Tecnologías usadas: {developmentStats.technologiesUsed}</li>
+                        <li><i className="fas fa-fire" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Racha actual: {developmentStats.currentStreak} días</li>
+            <li><i className="fab fa-github" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Commits en GitHub: {developmentStats.githubCommits}</li>
+            <li><i className="fas fa-align-left" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Líneas de código: {developmentStats.linesOfCode}</li>
+          </ul>
+        </div>
+              </Container>
     </SkillsContainer>
   );
 };

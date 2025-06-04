@@ -37,6 +37,12 @@ const ProjectsGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
   margin-bottom: 3rem;
+  
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+  }
 `;
 
 const LoadMore = styled.div`

@@ -17,8 +17,10 @@ const Footer = () => {
             href="/CV.pdf" 
             target="_blank" 
             rel="noopener noreferrer"
+            variant="secondary"
+            style={{ marginBottom: '1rem' }}
           >
-            Descargar CV
+            <i className="fas fa-file-download" style={{ marginRight: '0.5rem' }}></i>Descargar CV
           </Button>
         </div>
 
@@ -31,16 +33,19 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="footer-section">
+        <div className="footer-section" id="contacto">
           <h4>Contacto</h4>
           <div className={`social-links ${isMobile ? 'mobile-social' : ''}`}>
-            <a href="mailto:paulmendez1511@gmail.com">Email</a>
+            <a href="mailto:paulmendez1511@gmail.com" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <i className="fas fa-envelope"></i> Email
+            </a>
             <a 
               href="https://github.com/Paul-1511" 
               target="_blank" 
               rel="noopener noreferrer"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
             >
-              GitHub
+              <i className="fab fa-github"></i> GitHub
             </a>
           </div>
         </div>

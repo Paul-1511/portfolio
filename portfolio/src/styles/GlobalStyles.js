@@ -59,4 +59,12 @@ export const GlobalStyles = createGlobalStyle`
   .fade-in {
     animation: fadeIn 0.5s ease-out;
   }
+
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
 `;

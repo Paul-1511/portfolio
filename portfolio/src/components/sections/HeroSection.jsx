@@ -46,12 +46,20 @@ const HeroButtons = styled.div`
   display: flex;
   gap: 1rem;
   margin: 2rem 0;
+  justify-content: center;
+  
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
 `;
 
 const HeroSocial = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 1.5rem;
-  a {
+  a, button {
     font-size: 1.5rem;
     color: ${({ theme }) => theme.text};
     transition: color 0.3s;
@@ -75,7 +83,7 @@ const HeroSection = () => {
           <h1>Hola, soy <span>Pablo Méndez</span></h1>
           <h2>Desarrollador Full Stack</h2>
           <p>
-            {!isMobile && "Especializado en React, Node.js y TypeScript. "}
+            {!isMobile && "Aprendiendo React, Node.js y TypeScript. "}
             Creo soluciones web eficientes y escalables.
           </p>
 
@@ -92,14 +100,33 @@ const HeroSection = () => {
               Descargar CV
             </Button>
           </HeroButtons>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+            <iframe
+              src="/CV.pdf"
+              title="CV Preview"
+              style={{ border: '1px solid #ccc', borderRadius: '8px', width: '100%', maxWidth: '700px', height: isMobile ? '400px' : '1000px' }}
+            />
+          </div>
 
           <HeroSocial>
-            <a href="https://github.com/Paul-1511" target="_blank" rel="noopener">
-              <i className="fab fa-github"></i>
-            </a>
-            <a href="mailto:paulmendez1511@gmail.com">
-              <i className="fas fa-envelope"></i>
-            </a>
+            <Button
+              as="a"
+              href="https://github.com/Paul-1511"
+              target="_blank"
+              rel="noopener"
+              variant="text"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+            >
+              <i className="fab fa-github"></i> GitHub
+            </Button>
+            <Button
+              as="a"
+              href="mailto:paulmendez1511@gmail.com"
+              variant="text"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+            >
+              <i className="fas fa-envelope"></i> Email
+            </Button>
           </HeroSocial>
         </HeroText>
 

@@ -211,11 +211,11 @@ export const certificationsData = [
 
 // Estadísticas de desarrollo
 export const developmentStats = {
-  totalProjects: 15,
+  totalProjects: 45,
   completedHours: 500,
   technologiesUsed: 20,
   clientSatisfaction: 100,
   currentStreak: 45, // días programando consecutivos
-  githubCommits: 350,
-  linesOfCode: 25000
+  githubCommits: 280,
+  linesOfCode: 75000
 };

@@ -32,8 +32,8 @@ export const darkTheme = {
   secondary: '#9d4edd',
   secondaryLight: '#a370f0',
   secondaryDark: '#5f2ea8',
-  background: '#121212',
-  backgroundSecondary: '#1e1e1e',
+  background: '#0a1626',
+  backgroundSecondary: '#14213d',
   text: '#f8f9fa',
   textLight: '#adb5bd',
   fonts: {
