@@ -3,11 +3,11 @@ export const projectsData = [
   {
     id: 1,
     title: "Slot Machine Game",
-    description: "Juego de máquina tragamonedas interactivo desarrollado con React. Incluye animaciones, efectos de sonido y lógica de juego completa.",
-    image: "/images/slot-machine.jpg", // Agrega screenshot de tu proyecto
+    description: "Juego de máquina tragamonedas interactivo desarrollado con React. Incluye animaciones.",
+    image: "/images/slot-machine.jpg",
     demoUrl: "https://slot-machine-red.vercel.app/",
-    githubUrl: "https://github.com/Paul-1511/SlotMachine", // Cambia por tu repo
-    technologies: ["React", "CSS3", "JavaScript", "Vercel"]
+    githubUrl: "https://github.com/Paul-1511/SlotMachine", 
+    technologies: ["React", "CSS3", "Vercel"]
   },
   {
     id: 2,
