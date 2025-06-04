@@ -1,76 +1,102 @@
-// src/sections/ProjectsSection.jsx
 import React, { useState } from 'react';
-import ProjectCard from '../components/ProjectCard';
-import { projectsData } from '../data/projectsData';
-import './ProjectsSection.css';
+import ProjectCard from '../projects/ProjectCard';
+import { projectsData } from '../../data/projectsData';
+import Button from '../ui/Button';
+import { unique, capitalize } from '../../utils/helpers';
+import styled from 'styled-components';
+
+const ProjectsContainer = styled.section`
+  padding: 5rem 2rem;
+  background: ${({ theme }) => theme.backgroundSecondary};
+`;
+
+const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+const SectionHeader = styled.div`
+  text-align: center;
+  margin-bottom: 3rem;
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+`;
+
+const Filters = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+`;
+
+const ProjectsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+`;
+
+const LoadMore = styled.div`
+  text-align: center;
+`;
 
 const ProjectsSection = () => {
   const [filter, setFilter] = useState('all');
   const [visibleProjects, setVisibleProjects] = useState(6);
 
-  // Filtrar proyectos por categoría
+  const categories = ['all', ...unique(projectsData.map(p => p.category || 'otros'))];
+
   const filteredProjects = filter === 'all' 
     ? projectsData 
     : projectsData.filter(project => 
-        project.category && project.category.toLowerCase() === filter
+        (project.category || 'otros').toLowerCase() === filter
       );
 
-  // Obtener categorías únicas
-  const categories = ['all', ...new Set(projectsData.map(p => p.category).filter(Boolean))];
-
-  const loadMore = () => {
-    setVisibleProjects(prev => prev + 3);
-  };
-
   return (
-    <section className="projects-section" id="proyectos">
-      <div className="container">
-        <div className="section-header">
-          <h2 className="section-title">Mis Proyectos</h2>
-          <p className="section-description">
-            Aquí puedes ver algunos de los proyectos que he desarrollado, 
-            demostrando mis habilidades en React, JavaScript y desarrollo web moderno.
-          </p>
-        </div>
+    <ProjectsContainer id="proyectos">
+      <Container>
+        <SectionHeader>
+          <h2>Mis Proyectos</h2>
+          <p>Soluciones reales con tecnologías modernas</p>
+        </SectionHeader>
 
-        {/* Filtros */}
-        <div className="projects-filters">
+        <Filters>
           {categories.map(category => (
-            <button
+            <Button
               key={category}
-              className={`filter-btn ${filter === category ? 'active' : ''}`}
-              onClick={() => setFilter(category)}
+              onClick={() => {
+                setFilter(category);
+                setVisibleProjects(6);
+              }}
+              variant={filter === category ? 'primary' : 'outline'}
+              small
             >
-              {category === 'all' ? 'Todos' : category}
-            </button>
+              {category === 'all' ? 'Todos' : capitalize(category)}
+            </Button>
           ))}
-        </div>
+        </Filters>
 
-        {/* Grid de proyectos */}
-        <div className="projects-grid">
-          {filteredProjects.slice(0, visibleProjects).map((project, index) => (
-            <div 
-              key={project.id} 
-              className="project-item"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <ProjectCard project={project} />
-            </div>
+        <ProjectsGrid>
+          {filteredProjects.slice(0, visibleProjects).map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
-        </div>
+        </ProjectsGrid>
 
-        {/* Botón cargar más */}
         {visibleProjects < filteredProjects.length && (
-          <div className="projects-load-more">
-            <button className="btn btn-outline" onClick={loadMore}>
+          <LoadMore>
+            <Button 
+              onClick={() => setVisibleProjects(prev => prev + 3)}
+              variant="outline"
+            >
               Ver Más Proyectos
-            </button>
-          </div>
+            </Button>
+          </LoadMore>
         )}
-
-
-      </div>
-    </section>
+      </Container>
+    </ProjectsContainer>
   );
 };
 

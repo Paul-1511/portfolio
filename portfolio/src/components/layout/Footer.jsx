@@ -1,5 +1,6 @@
 import React from 'react';
-import { useResponsive } from '../hooks/useResponsive';
+import useResponsive from '../../hooks/useResponsive'; // Ruta corregida (desde layout/)
+import Button from '../ui/Button'; // Opcional: para botones de contacto
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,6 +12,14 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Pablo Méndez</h3>
           <p>Desarrollador Web Full Stack</p>
+          <Button 
+            as="a" 
+            href="/CV.pdf" 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            Descargar CV
+          </Button>
         </div>
 
         <div className="footer-section">
@@ -18,7 +27,7 @@ const Footer = () => {
           <ul>
             <li><a href="#proyectos">Proyectos</a></li>
             <li><a href="#habilidades">Habilidades</a></li>
-            <li><a href="/CV.pdf">Descargar CV</a></li>
+            <li><a href="#contacto">Contacto</a></li>
           </ul>
         </div>
 
@@ -26,13 +35,19 @@ const Footer = () => {
           <h4>Contacto</h4>
           <div className={`social-links ${isMobile ? 'mobile-social' : ''}`}>
             <a href="mailto:paulmendez1511@gmail.com">Email</a>
-            <a href="https://github.com/Paul-1511">GitHub</a>
+            <a 
+              href="https://github.com/Paul-1511" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
           </div>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {currentYear} Tu Nombre. Todos los derechos reservados.</p>
+        <p>&copy; {currentYear} Pablo Méndez. Todos los derechos reservados.</p>
       </div>
     </footer>
   );

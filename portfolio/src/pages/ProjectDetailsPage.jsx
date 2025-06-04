@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useResponsive } from '../hooks/useResponsive';
+import useResponsive from '../hooks/useResponsive';
 import { projectsData } from '../data/projectsData';
-import Button from '../ui/Button';
+import Button from '../components/ui/Button';
+import { capitalize, truncate } from '../utils/helpers';
 
 const ProjectDetailsPage = ({ projectId }) => {
   const [project, setProject] = useState(null);
@@ -20,10 +21,10 @@ const ProjectDetailsPage = ({ projectId }) => {
     <div className={`project-details-page ${isMobile ? 'mobile-details' : ''}`}>
       <div className="container">
         <div className="project-hero">
-          <img src={project.image} alt={project.title} className="project-main-image" />
+          {/* <img src={project.image} alt={project.title} className="project-main-image" /> */}
           <div className="project-info">
-            <h1 className="project-title">{project.title}</h1>
-            <p className="project-description">{project.description}</p>
+            <h1 className="project-title">{capitalize(project.title)}</h1>
+            <p className="project-description">{truncate(project.description, isMobile ? 120 : 300)}</p>
             <div className="project-actions">
               <Button variant="primary">
                 <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">

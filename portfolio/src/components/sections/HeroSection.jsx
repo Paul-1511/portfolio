@@ -1,75 +1,121 @@
 import React from 'react';
-import './HeroSection.css';
-import { useResponsive } from '../hooks/useResponsive';
+import useResponsive from '../../hooks/useResponsive';
+import Button from '../ui/Button';
+import styled from 'styled-components';
+
+const HeroContainer = styled.section`
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  background: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.text};
+`;
+
+const HeroContent = styled.div`
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 3rem;
+  align-items: center;
+
+  ${({ $isMobile }) => $isMobile && `
+    flex-direction: column;
+    text-align: center;
+  `}
+`;
+
+const HeroText = styled.div`
+  flex: 1;
+  h1 span {
+    color: ${({ theme }) => theme.primary};
+  }
+`;
+
+const HeroImage = styled.div`
+  flex: 1;
+  img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+`;
+
+const HeroButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+`;
+
+const HeroSocial = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  a {
+    font-size: 1.5rem;
+    color: ${({ theme }) => theme.text};
+    transition: color 0.3s;
+    &:hover {
+      color: ${({ theme }) => theme.primary};
+    }
+  }
+`;
 
 const HeroSection = () => {
-  const { isMobile, isTablet } = useResponsive();
+  const { isMobile } = useResponsive();
 
-  const scrollToProjects = () => {
-    document.getElementById('proyectos').scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const downloadCV = () => {
-    const link = document.createElement('a');
-    link.href = '/CV.pdf'; 
-    link.download = 'CV_PabloMendez.pdf';
-    link.click();
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section className="hero-section" id="inicio">
-      <div className="hero-container">
-        <div className={`hero-content ${isMobile ? 'mobile-layout' : ''}`}>
-          <div className="hero-text">
-            <h1 className="hero-title">
-              Hola, soy <span className="highlight">Tu Nombre</span>
-            </h1>
-            <h2 className="hero-subtitle">
-              Desarrollador Web Full Stack
-            </h2>
-            <p className="hero-description">
-              Especializado en React, JavaScript y tecnologías modernas. 
-              {!isMobile && "Apasionado por crear experiencias web increíbles y funcionales."}
-              Transformo ideas en código limpio y eficiente.
-            </p>
-            <div className={`hero-buttons ${isMobile ? 'mobile-buttons' : ''}`}>
-              <button className="btn btn-primary" onClick={scrollToProjects}>
-                Ver Proyectos
-              </button>
-              <button className="btn btn-secondary" onClick={downloadCV}>
-                Descargar CV
-              </button>
-            </div>
-            <div className="hero-social">
-              <a href="https://github.com/Paul-1511" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-github"></i>
-              </a>
-              <a href="mailto:paulmendez1511@gmail.com">
-                <i className="fas fa-envelope"></i>
-              </a>
-            </div>
-          </div>
-          {!isMobile && (
-            <div className="hero-image">
-              <div className="hero-avatar">
-                <img src="/images/profile.jpg" alt="Tu foto de perfil" />
-              </div>
-              <div className="hero-decoration">
-                <div className="floating-element"></div>
-                <div className="floating-element"></div>
-                <div className="floating-element"></div>
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="hero-scroll">
-          <div className="scroll-indicator">
-            <span>Scroll</span>
-            <div className="scroll-arrow"></div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <HeroContainer id="inicio">
+      <HeroContent $isMobile={isMobile}>
+        <HeroText>
+          <h1>Hola, soy <span>Pablo Méndez</span></h1>
+          <h2>Desarrollador Full Stack</h2>
+          <p>
+            {!isMobile && "Especializado en React, Node.js y TypeScript. "}
+            Creo soluciones web eficientes y escalables.
+          </p>
+
+          <HeroButtons>
+            <Button onClick={() => scrollTo('proyectos')} variant="primary">
+              Ver Proyectos
+            </Button>
+            <Button 
+              as="a" 
+              href="/CV.pdf" 
+              download="CV_PabloMendez.pdf"
+              variant="secondary"
+            >
+              Descargar CV
+            </Button>
+          </HeroButtons>
+
+          <HeroSocial>
+            <a href="https://github.com/Paul-1511" target="_blank" rel="noopener">
+              <i className="fab fa-github"></i>
+            </a>
+            <a href="mailto:paulmendez1511@gmail.com">
+              <i className="fas fa-envelope"></i>
+            </a>
+          </HeroSocial>
+        </HeroText>
+
+        {/*
+        {!isMobile && (
+          <HeroImage>
+            <img 
+              src="/images/profile.jpg" 
+              alt="Pablo Méndez" 
+              loading="lazy"
+            />
+          </HeroImage>
+        )}
+        */}
+      </HeroContent>
+    </HeroContainer>
   );
 };
 

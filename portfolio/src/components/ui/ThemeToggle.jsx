@@ -1,97 +1,97 @@
 import React, { useState, useEffect } from 'react';
-import './ThemeToggle.css';
-import { useResponsive } from '../hooks/useResponsive';
+import styled, { css, keyframes } from 'styled-components';
+import useResponsive from '../../hooks/useResponsive';
+
+const ToggleContainer = styled.div`
+  position: ${({ $position }) => $position};
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  
+  ${({ $size }) => 
+    $size === 'small' && css`
+      transform: scale(0.8);
+    `}
+`;
+
+const ToggleButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  position: relative;
+`;
+
+const ToggleTrack = styled.div`
+  width: 60px;
+  height: 30px;
+  background: ${({ theme }) => theme.backgroundSecondary};
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+`;
+
+const ToggleThumb = styled.div`
+  width: 26px;
+  height: 26px;
+  background: ${({ theme }) => theme.primary};
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: ${({ $isDark }) => ($isDark ? '32px' : '2px')};
+  transition: left 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const twinkle = keyframes`
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+`;
+
+const Star = styled.span`
+  position: absolute;
+  font-size: 10px;
+  animation: ${twinkle} 2s infinite;
+  
+  &:nth-child(1) { top: 5px; left: 10px; }
+  &:nth-child(2) { top: 15px; left: 25px; }
+  &:nth-child(3) { top: 8px; left: 40px; }
+`;
 
 const ThemeToggle = ({ 
-  className = '',
-  size = 'medium',
-  position = 'fixed',
-  showLabel = false,
-  variant = 'default'
+  theme, setTheme, size = 'medium', position = 'fixed'
 }) => {
-  const [isDark, setIsDark] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const isDark = theme === 'dark';
   const { isMobile } = useResponsive();
-
-  // Ajustar tamaño y posición automáticamente en móvil
   const responsiveSize = isMobile ? 'small' : size;
   const responsivePosition = isMobile ? 'absolute' : position;
 
-  useEffect(() => {
-    // Verificar preferencia guardada o del sistema
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-    setIsDark(initialTheme === 'dark');
-    
-    // Aplicar tema inicial
-    document.documentElement.setAttribute('data-theme', initialTheme);
-    document.body.classList.toggle('dark-theme', initialTheme === 'dark');
-  }, []);
-
-  useEffect(() => {
-    // Aplicar tema al documento
-    const theme = isDark ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-    document.body.classList.toggle('dark-theme', isDark);
-    localStorage.setItem('theme', theme);
-
-    // Emitir evento personalizado para notificar cambio de tema
-    window.dispatchEvent(new CustomEvent('themeChange', { detail: { theme } }));
-  }, [isDark]);
-
   const toggleTheme = () => {
-    setIsAnimating(true);
-    setIsDark(!isDark);
-    
-    // Resetear animación
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 300);
+    setTheme(isDark ? 'light' : 'dark');
   };
 
-  const baseClasses = 'theme-toggle';
-  const variantClass = `theme-toggle-${variant}`;
-  const animatingClass = isAnimating ? 'theme-toggle-animating' : '';
-
   return (
-    <div className={`${baseClasses} theme-toggle-${responsiveSize} theme-toggle-${responsivePosition} ${variantClass} ${animatingClass} ${className}`}>
-      <button 
-        className="theme-toggle-button"
+    <ToggleContainer $size={responsiveSize} $position={responsivePosition}>
+      <ToggleButton 
         onClick={toggleTheme}
         aria-label={`Cambiar a tema ${isDark ? 'claro' : 'oscuro'}`}
-        title={`Cambiar a tema ${isDark ? 'claro' : 'oscuro'}`}
       >
-        <div className="theme-toggle-track">
-          <div className="theme-toggle-thumb">
-            <span className="theme-toggle-icon">
-              {isDark ? '🌙' : '☀️'}
-            </span>
-          </div>
-        </div>
-        
-        {!isMobile && (
-          <div className="theme-toggle-background">
-            <div className="theme-toggle-stars">
-              <span className="star star-1">✨</span>
-              <span className="star star-2">⭐</span>
-              <span className="star star-3">✨</span>
-            </div>
-            <div className="theme-toggle-clouds">
-              <span className="cloud cloud-1">☁️</span>
-              <span className="cloud cloud-2">☁️</span>
-            </div>
-          </div>
-        )}
-      </button>
-      
-      {showLabel && !isMobile && (
-        <span className="theme-toggle-label">
-          {isDark ? 'Modo Oscuro' : 'Modo Claro'}
-        </span>
-      )}
-    </div>
+        <ToggleTrack>
+          {isDark && (
+            <>
+              <Star>✨</Star>
+              <Star>⭐</Star>
+              <Star>✨</Star>
+            </>
+          )}
+          <ToggleThumb $isDark={isDark}>
+            {isDark ? '🌙' : '☀️'}
+          </ToggleThumb>
+        </ToggleTrack>
+      </ToggleButton>
+    </ToggleContainer>
   );
 };
 

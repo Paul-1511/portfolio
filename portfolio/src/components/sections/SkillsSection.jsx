@@ -1,155 +1,136 @@
-import React, { useState, useEffect } from 'react';
-import './SkillsSection.css';
-import { useResponsive } from '../hooks/useResponsive';
+import React, { useEffect, useState } from 'react';
+import useResponsive from '../../hooks/useResponsive';
+import { skillsData } from '../../data/skillsData';
+import SkillBadge from '../ui/SkillBadge';
+import Button from '../ui/Button';
+import { capitalize } from '../../utils/helpers';
+import styled from 'styled-components';
+
+const SkillsContainer = styled.section`
+  padding: 5rem 2rem;
+  background: ${({ theme }) => theme.background};
+`;
+
+const Container = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+const SectionHeader = styled.div`
+  text-align: center;
+  margin-bottom: 3rem;
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+`;
+
+const SkillsGrid = styled.div`
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+`;
+
+const SkillCategory = styled.div`
+  h3 {
+    margin-bottom: 1.5rem;
+    color: ${({ theme }) => theme.primary};
+  }
+`;
+
+const CTA = styled.div`
+  text-align: center;
+  margin-top: 4rem;
+`;
+
+const Certifications = styled.div`
+  margin-top: 4rem;
+  h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+`;
+
+const CertsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+`;
+
+const CertCard = styled.div`
+  padding: 1.5rem;
+  background: ${({ theme }) => theme.cardBackground};
+  border-radius: 10px;
+  text-align: center;
+  i {
+    font-size: 2rem;
+    color: ${({ theme }) => theme.primary};
+    margin-bottom: 1rem;
+  }
+  h4 {
+    margin-bottom: 0.5rem;
+  }
+`;
 
 const SkillsSection = () => {
-  const [animateProgress, setAnimateProgress] = useState(false);
-  const { isMobile, isTablet } = useResponsive();
-
-  const skillsData = [
-    {
-      category: "Frontend",
-      skills: [
-        { name: "HTML5", level: 95, icon: "fab fa-html5" },
-        { name: "CSS3", level: 90, icon: "fab fa-css3-alt" },
-        { name: "JavaScript", level: 88, icon: "fab fa-js-square" },
-        { name: "React", level: 85, icon: "fab fa-react" },
-        { name: "TypeScript", level: 75, icon: "fas fa-code" },
-        { name: "Tailwind CSS", level: 80, icon: "fas fa-palette" }
-      ]
-    },
-    {
-      category: "Backend",
-      skills: [
-        { name: "Node.js", level: 80, icon: "fab fa-node-js" },
-        { name: "Express", level: 75, icon: "fas fa-server" },
-        { name: "MongoDB", level: 70, icon: "fas fa-database" },
-        { name: "API REST", level: 85, icon: "fas fa-exchange-alt" },
-        { name: "Firebase", level: 70, icon: "fas fa-fire" }
-      ]
-    },
-    {
-      category: "Herramientas",
-      skills: [
-        { name: "Git", level: 90, icon: "fab fa-git-alt" },
-        { name: "GitHub", level: 85, icon: "fab fa-github" },
-        { name: "VS Code", level: 95, icon: "fas fa-code" },
-        { name: "Figma", level: 75, icon: "fab fa-figma" },
-        { name: "Postman", level: 80, icon: "fas fa-paper-plane" }
-      ]
-    }
-  ];
+  const [animate, setAnimate] = useState(false);
+  const { isMobile } = useResponsive();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setAnimateProgress(true);
-          }
-        });
-      },
-      { threshold: 0.5 }
+      ([entry]) => entry.isIntersecting && setAnimate(true),
+      { threshold: 0.1 }
     );
-
-    const section = document.getElementById('habilidades');
-    if (section) {
-      observer.observe(section);
-    }
-
+    observer.observe(document.getElementById('habilidades'));
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="skills-section" id="habilidades">
-      <div className="container">
-        <div className="section-header">
-          <h2 className="section-title">Mis Habilidades</h2>
-          <p className="section-description">
-            Tecnologías y herramientas que domino para crear soluciones web modernas y eficientes.
-          </p>
-        </div>
+    <SkillsContainer id="habilidades">
+      <Container>
+        <SectionHeader>
+          <h2>Mis Habilidades</h2>
+          <p>Tecnologías que domino y uso diariamente</p>
+        </SectionHeader>
 
-        <div className="skills-content">
-          {skillsData.map((category, categoryIndex) => (
-            <div key={category.category} className="skills-category">
-              <h3 className="category-title">{category.category}</h3>
-              <div className={`skills-grid ${isMobile ? 'mobile-grid' : isTablet ? 'tablet-grid' : ''}`}>
-                {category.skills.map((skill, skillIndex) => (
-                  <div 
-                    key={skill.name} 
-                    className="skill-item"
-                    style={{ 
-                      animationDelay: `${(categoryIndex * category.skills.length + skillIndex) * 0.1}s` 
-                    }}
-                  >
-                    <div className="skill-header">
-                      <div className="skill-info">
-                        <i className={skill.icon}></i>
-                        <span className="skill-name">{skill.name}</span>
-                      </div>
-                      <span className="skill-percentage">{skill.level}%</span>
-                    </div>
-                    <div className="skill-progress">
-                      <div 
-                        className="skill-progress-bar"
-                        style={{ 
-                          width: animateProgress ? `${skill.level}%` : '0%',
-                          transition: 'width 1s ease-in-out'
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+        <SkillsGrid>
+          {Array.isArray(skillsData) && skillsData.map((category) => (
+            <SkillCategory key={category.category}>
+              <h3>{capitalize(category.category)}</h3>
+              {Array.isArray(category.skills) && category.skills.map((skill) => (
+                <SkillBadge
+                  key={skill.name}
+                  skill={skill}
+                  showProgress
+                  animate={animate}
+                  $small={isMobile}
+                />
+              ))}
+            </SkillCategory>
           ))}
-        </div>
+        </SkillsGrid>
 
-        {/* Certificaciones - Ocultar en móvil si es necesario */}
         {!isMobile && (
-          <div className="certifications">
-            <h3 className="certifications-title">Certificaciones</h3>
-            <div className="certifications-grid">
-              <div className="certification-item">
-                <div className="cert-icon">
-                  <i className="fab fa-react"></i>
-                </div>
-                <div className="cert-info">
-                  <h4>React Developer</h4>
-                  <p>FreeCodeCamp - 2024</p>
-                </div>
-              </div>
-              <div className="certification-item">
-                <div className="cert-icon">
-                  <i className="fab fa-js-square"></i>
-                </div>
-                <div className="cert-info">
-                  <h4>JavaScript Algorithms</h4>
-                  <p>FreeCodeCamp - 2024</p>
-                </div>
-              </div>
-              <div className="certification-item">
-                <div className="cert-icon">
-                  <i className="fas fa-mobile-alt"></i>
-                </div>
-                <div className="cert-info">
-                  <h4>Responsive Web Design</h4>
-                  <p>FreeCodeCamp - 2023</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Certifications>
+            <h3>Certificaciones</h3>
+            <CertsGrid>
+              <CertCard>
+                <i className="fab fa-react"></i>
+                <h4>React Avanzado</h4>
+                <p>FreeCodeCamp · 2024</p>
+              </CertCard>
+              {/* Agrega más certificaciones aquí */}
+            </CertsGrid>
+          </Certifications>
         )}
 
-        {/* Call to Action */}
-        <div className="skills-cta">
-          <h3>¿Interesado en trabajar juntos?</h3>
-          <p>Estoy disponible para proyectos freelance y oportunidades laborales.</p>
-          <button className="btn btn-primary">Contáctame</button>
-        </div>
-      </div>
-    </section>
+        <CTA>
+          <Button as="a" href="#contacto" variant="primary">
+            ¿Trabajamos juntos?
+          </Button>
+        </CTA>
+      </Container>
+    </SkillsContainer>
   );
 };
 
