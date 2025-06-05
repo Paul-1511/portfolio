@@ -8,7 +8,6 @@ import styled from 'styled-components';
 
 const ProjectsContainer = styled.section`
   padding: 5rem 2rem;
-  background: ${({ theme }) => theme.backgroundSecondary};
 `;
 
 const Container = styled.div`
@@ -71,21 +70,7 @@ const ProjectsSection = () => {
           <p>Soluciones reales con tecnologías modernas</p>
         </SectionHeader>
 
-        <Filters>
-          {categories.map(category => (
-            <Button
-              key={category}
-              onClick={() => {
-                setFilter(category);
-                setVisibleProjects(6);
-              }}
-              variant={filter === category ? 'primary' : 'outline'}
-              small
-            >
-              {category === 'all' ? 'Todos' : capitalize(category)}
-            </Button>
-          ))}
-        </Filters>
+
 
         <ProjectsGrid>
           {filteredProjects.slice(0, visibleProjects).map((project) => (

@@ -9,7 +9,6 @@ import styled from 'styled-components';
 
 const SkillsContainer = styled.section`
   padding: 5rem 2rem;
-  background: ${({ theme }) => theme.background};
 `;
 
 const Container = styled.div`
@@ -125,13 +124,13 @@ const SkillsSection = () => {
 
         <div className="dev-stats" style={{ margin: '3rem 0' }}>
           <h3>Estadísticas de Desarrollo</h3>
-          <ul>
-            <li><i className="fas fa-project-diagram" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Proyectos totales: {developmentStats.totalProjects}</li>
-            <li><i className="fas fa-clock" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Horas completadas: {developmentStats.completedHours}</li>
-            <li><i className="fas fa-code" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Tecnologías usadas: {developmentStats.technologiesUsed}</li>
-                        <li><i className="fas fa-fire" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Racha actual: {developmentStats.currentStreak} días</li>
-            <li><i className="fab fa-github" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Commits en GitHub: {developmentStats.githubCommits}</li>
-            <li><i className="fas fa-align-left" style={{ marginRight: '0.5rem', color: '#007bff' }}></i>Líneas de código: {developmentStats.linesOfCode}</li>
+          <ul className='no-bullets'>
+            <li><i className="fas fa-project-diagram" style={{ marginRight: '0.5rem', color: '#ff5da3' }}></i>Proyectos totales: {developmentStats.totalProjects}</li>
+            <li><i className="fas fa-clock" style={{ marginRight: '0.5rem', color: '#ff5da3' }}></i>Horas completadas: {developmentStats.completedHours}</li>
+            <li><i className="fas fa-code" style={{ marginRight: '0.5rem', color: '#ff5da3' }}></i>Tecnologías usadas: {developmentStats.technologiesUsed}</li>
+                        <li><i className="fas fa-fire" style={{ marginRight: '0.5rem', color: '#ff5da3' }}></i>Racha actual: {developmentStats.currentStreak} días</li>
+            <li><i className="fab fa-github" style={{ marginRight: '0.5rem', color: '#ff5da3' }}></i>Commits en GitHub: {developmentStats.githubCommits}</li>
+            <li><i className="fas fa-align-left" style={{ marginRight: '0.5rem', color: '#ff5da3' }}></i>Líneas de código: {developmentStats.linesOfCode}</li>
           </ul>
         </div>
               </Container>

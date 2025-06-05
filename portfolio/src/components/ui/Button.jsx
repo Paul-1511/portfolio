@@ -13,62 +13,114 @@ const ButtonBase = styled.button`
   gap: 8px;
   border: none;
   position: relative;
+  font-family: ${({ theme }) => theme.fonts?.primary || 'Inter, sans-serif'};
+  box-shadow: ${({ theme }) => theme.shadows?.small || '0 2px 4px rgba(0,0,0,0.1)'};
   
-  ${({ $variant }) => 
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: ${({ theme }) => theme.shadows?.medium || '0 4px 12px rgba(0,0,0,0.15)'};
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+
+  ${({ $variant, theme }) =>
     $variant === 'primary' && css`
-      background: ${({ theme }) => theme.primary};
+      background: ${theme.primary};
       color: white;
-      &:hover { background: ${({ theme }) => theme.primaryDark }; }
-    `}
-  
-  ${({ $variant }) => 
-    $variant === 'secondary' && css`
-      background: ${({ theme }) => theme.secondary};
-      color: white;
-      &:hover { background: ${({ theme }) => theme.secondaryDark }; }
-    `}
-  
-  ${({ $variant }) => 
-    $variant === 'outline' && css`
-      background: transparent;
-      border: 2px solid ${({ theme }) => theme.primary};
-      color: ${({ theme }) => theme.primary};
-      &:hover { background: ${({ theme }) => theme.primaryLight }; }
+      &:hover { 
+        background: ${theme.primaryDark};
+      }
     `}
 
-  ${({ $size }) => 
+  ${({ $variant, theme }) =>
+    $variant === 'secondary' && css`
+      background: ${theme.secondary};
+      color: white;
+      &:hover { 
+        background: ${theme.secondaryDark};
+      }
+    `}
+
+  ${({ $variant, theme }) =>
+    $variant === 'outline' && css`
+      background: transparent;
+      border: 2px solid ${theme.primary};
+      color: ${theme.primary};
+      &:hover { 
+        background: ${theme.primary};
+        color: white;
+      }
+    `}
+
+  ${({ $variant, theme }) =>
+    $variant === 'ghost' && css`
+      background: transparent;
+      color: ${theme.primary};
+      &:hover { 
+        background: ${theme.primaryLight}20;
+        color: ${theme.primaryDark};
+      }
+    `}
+
+  ${({ $variant, theme }) =>
+    $variant === 'gradient' && css`
+      background: linear-gradient(135deg, ${theme.primary}, ${theme.secondary});
+      color: white;
+      &:hover { 
+        background: linear-gradient(135deg, ${theme.primaryDark}, ${theme.secondaryDark});
+      }
+    `}
+
+  ${({ $variant, theme }) =>
+    $variant === 'soft' && css`
+      background: ${theme.primaryLight}30;
+      color: ${theme.primaryDark};
+      &:hover { 
+        background: ${theme.primaryLight}50;
+      }
+    `}
+
+  ${({ $size }) =>
     $size === 'small' && css`
       padding: 8px 16px;
       font-size: 14px;
     `}
-  
-  ${({ $size }) => 
+
+  ${({ $size }) =>
     $size === 'medium' && css`
       padding: 12px 24px;
       font-size: 16px;
     `}
-  
-  ${({ $size }) => 
+
+  ${({ $size }) =>
     $size === 'large' && css`
       padding: 16px 32px;
       font-size: 18px;
     `}
 
-  ${({ $fullWidth }) => 
+  ${({ $fullWidth }) =>
     $fullWidth && css`
       width: 100%;
     `}
 
-  ${({ $loading }) => 
+  ${({ $loading }) =>
     $loading && css`
       opacity: 0.7;
       pointer-events: none;
     `}
 
-  ${({ $disabled }) => 
+  ${({ $disabled, theme }) =>
     $disabled && css`
       opacity: 0.5;
       cursor: not-allowed;
+      background: ${theme.textLight || '#6c757d'};
+      color: ${theme.text || '#212529'};
+      &:hover {
+        transform: none;
+        background: ${theme.textLight || '#6c757d'};
+      }
     `}
 `;
 
@@ -84,18 +136,18 @@ const Spinner = styled.span`
   animation: spin 1s ease-in-out infinite;
 `;
 
-const Button = ({ 
-  children, 
-  variant = 'primary', 
+const Button = ({
+  children,
+  variant = 'primary',
   size = 'medium',
-  onClick, 
+  onClick,
   disabled = false,
   loading = false,
   icon,
   iconPosition = 'left',
   fullWidth = false,
   type = 'button',
-  ...props 
+  ...props
 }) => {
   const { isMobile } = useResponsive();
   const responsiveSize = isMobile && size === 'medium' ? 'small' : size;

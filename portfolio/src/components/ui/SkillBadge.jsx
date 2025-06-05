@@ -7,7 +7,7 @@ const BadgeContainer = styled.div`
   background: ${({ theme }) => theme.cardBackground};
   border-radius: 12px;
   padding: 16px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.25);
   transition: transform 0.3s ease;
   
   ${({ $clickable }) => 
@@ -44,21 +44,22 @@ const BadgeInfo = styled.div`
 const SkillName = styled.span`
   font-weight: 600;
   display: block;
+  color: ${({ theme }) => theme.skillText?. primary || theme.text};
 `;
 
 const SkillCategory = styled.span`
   font-size: 0.8em;
-  opacity: 0.7;
+  color: ${({ theme }) => theme.skillText?.secondary || theme.textLight};
 `;
 
 const SkillLevel = styled.span`
   font-weight: bold;
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.skillText?.accent || theme.primary};
 `;
 
 const ProgressBar = styled.div`
   height: 6px;
-  background: ${({ theme }) => theme.backgroundSecondary};
+  background: ${({ theme }) => theme.progressBar?.background || '#e0e0e0'};
   border-radius: 3px;
   overflow: hidden;
   margin-top: 8px;
@@ -66,7 +67,7 @@ const ProgressBar = styled.div`
 
 const ProgressFill = styled.div`
   height: 100%;
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.scrolltheme};
   border-radius: 3px;
   transition: width 1.5s ease-out;
 `;

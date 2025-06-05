@@ -28,7 +28,7 @@ export const GlobalStyles = createGlobalStyle`
 
   a {
     text-decoration: none;
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.scrolltheme};
     transition: color 0.3s ease;
 
     &:hover {
@@ -42,11 +42,11 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   ::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.backgroundSecondary};
+    background: ${({ theme }) => theme.background};
   }
 
   ::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.primary};
+    background: ${({ theme }) => theme.scrolltheme};
     border-radius: 4px;
   }
 
@@ -78,4 +78,16 @@ export const GlobalStyles = createGlobalStyle`
     justify-content: center;
     gap: 0.5rem;
   }
+
+  .no-bullets {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.footer-section ul,
+.nav-links {
+  list-style-type: none;
+  padding-left: 0;
+}
 `;
+
