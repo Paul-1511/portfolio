@@ -27,7 +27,7 @@ const FooterContent = styled.div`
 
 const FooterSection = styled.div`
   h3, h4 {
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.scrolltheme};
     margin-bottom: 15px;
     font-family: ${({ theme }) => theme.fonts?.primary || 'Inter, sans-serif'};
     font-weight: 600;
@@ -42,9 +42,17 @@ const FooterSection = styled.div`
   }
   
   p {
-    color: ${({ theme }) => theme.textLight};
+    color: ${({ theme }) => theme.text};
     margin-bottom: 15px;
     font-size: 16px;
+  }
+  
+  /* Centrar contenido en la sección de contacto */
+  &.contact-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 `;
 
@@ -65,7 +73,7 @@ const LinksList = styled.ul`
       position: relative;
       
       &:hover {
-        color: ${({ theme }) => theme.primary};
+        color: ${({ theme }) => theme.scrolltheme};
         transform: translateX(5px);
       }
       
@@ -90,14 +98,11 @@ const LinksList = styled.ul`
 const SocialLinks = styled.div`
   display: flex;
   gap: 15px;
-  
-  ${({ $isMobile }) => $isMobile && `
-    justify-content: center;
-    flex-wrap: wrap;
-  `}
+  justify-content: center; /* Siempre centrado */
+  flex-wrap: wrap;
   
   a {
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.scrolltheme};
     text-decoration: none;
     padding: 10px 15px;
     border-radius: 8px;
@@ -110,7 +115,7 @@ const SocialLinks = styled.div`
     font-size: 14px;
     
     &:hover {
-      background: ${({ theme }) => theme.primary};
+      background: ${({ theme }) => theme.scrolltheme};
       color: white;
       transform: translateY(-2px);
       box-shadow: ${({ theme }) => theme.shadows?.medium || '0 4px 12px rgba(0,0,0,0.15)'};
@@ -125,11 +130,11 @@ const SocialLinks = styled.div`
 const FooterBottom = styled.div`
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid ${({ theme }) => theme.primary}20;
+  border-top: 1px solid ${({ theme }) => theme.scrolltheme}20;
   text-align: center;
   
   p {
-    color: ${({ theme }) => theme.textLight};
+    color: ${({ theme }) => theme.scrolltheme};
     font-size: 14px;
     margin: 0;
   }
@@ -175,7 +180,7 @@ const Footer = () => {
           </LinksList>
         </FooterSection>
 
-        <FooterSection id="contacto">
+        <FooterSection id="contacto" className="contact-section">
           <h4>Contacto</h4>
           <SocialLinks $isMobile={isMobile}>
             <a href="mailto:1511@gmail.com">

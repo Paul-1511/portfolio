@@ -54,7 +54,7 @@ const SkillCategory = styled.span`
 
 const SkillLevel = styled.span`
   font-weight: bold;
-  color: ${({ theme }) => theme.skillText?.accent || theme.primary};
+  color: ${({ theme }) => theme.scrolltheme?.accent || theme.scrolltheme};
 `;
 
 const ProgressBar = styled.div`

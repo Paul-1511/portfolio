@@ -40,7 +40,7 @@ const SkillsGrid = styled.div`
 const SkillCategory = styled.div`
   h3 {
     margin-bottom: 1.5rem;
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.scrolltheme};
   }
 `;
 
